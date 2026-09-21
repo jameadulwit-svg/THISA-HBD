@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Happy Birthday Thisa Suttisa! 🎂✨ สุขสันต์วันเกิดนะ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=Nunito:wght@400;600;700;800&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            itim: ['Itim', 'cursive'],
+            mitr: ['Mitr', 'sans-serif'],
+            nunito: ['Nunito', 'sans-serif']
+          },
+          colors: {
+            cake: {
+              cream: '#FFF9F2',
+              berry: '#FF6B8B',
+              softpink: '#FFA8BA',
+              yellow: '#FFE69A',
+              purple: '#E4D4F7',
+              mint: '#D2F5E3'
+            }
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-12px) rotate(2deg)' }
+            },
+            flicker: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+              '50%': { transform: 'scale(0.88, 1.15)', opacity: '0.85' },
+              '75%': { transform: 'scale(1.1, 0.9)', opacity: '0.95' }
+            },
+            bounceGentle: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.05)' }
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(-3deg)' },
+              '50%': { transform: 'rotate(3deg)' }
+            }
+          },
+          animation: {
+            float: 'float 4s ease-in-out infinite',
+            flicker: 'flicker 0.6s ease-in-out infinite alternate',
+            bounceGentle: 'bounceGentle 2s ease-in-out infinite',
+            wiggle: 'wiggle 1s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Mobile-first optimizations */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    input, textarea {
+      user-select: text;
+    }
+    body {
+      font-family: 'Itim', 'Mitr', sans-serif;
+      background: linear-gradient(145deg, #FFF0F5 0%, #FFF5EE 45%, #F3EAFF 100%);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+      touch-action: manipulation;
+    }
+    .flame {
+      width: 14px;
+      height: 24px;
+      background: radial-gradient(ellipse at bottom, #FFF176 0%, #FF9800 60%, #FF5722 100%);
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      box-shadow: 0 0 16px #FFA726, 0 0 28px #FFE082;
+      transition: all 0.5s ease-out;
+    }
+    .flame.extinguished {
+      opacity: 0;
+      transform: scale(0.1) translateY(-10px) !important;
+    }
+    .smoke {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: rgba(180, 180, 180, 0.7);
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .smoke.active {
+      animation: smokeRise 1.5s forwards ease-out;
+    }
+    @keyframes smokeRise {
+      0% { opacity: 0.8; transform: translate(-50%, 0) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -35px) scale(3.5); filter: blur(3px); }
+    }
+    .card-polaroid {
+      box-shadow: 0 8px 20px -4px rgba(255, 150, 170, 0.28), 0 4px 10px -2px rgba(255, 150, 170, 0.15);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .card-polaroid:active {
+      transform: scale(0.98);
+    }
+    /* Mobile Touch Slider Hide Scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Photo Spoiler Blur & Tap-to-Reveal */
+    .photo-reveal-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.875rem;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .photo-reveal-box .photo-img {
+      filter: blur(22px) brightness(0.92);
+      transform: scale(1.12);
+      transition: filter 0.6s cubic-bezier(0.33, 1, 0.68, 1), transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+      will-change: filter, transform;
+    }
+    .photo-reveal-box.revealed .photo-img {
+      filter: blur(0px) brightness(1);
+      transform: scale(1);
+    }
+    .photo-reveal-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 230, 240, 0.42);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+      cursor: pointer;
+    }
+    .photo-reveal-box.revealed .photo-reveal-overlay {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .photo-view-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      z-index: 15;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.35s ease;
+      pointer-events: none;
+    }
+    .photo-reveal-box.revealed .photo-view-badge {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="relative text-slate-700 antialiased selection:bg-pink-200">
+
+  <!-- Mobile Floating Ambient Icons -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute top-6 left-4 text-pink-300 text-2xl animate-float opacity-70">✨</div>
+    <div class="absolute top-28 right-4 text-amber-300 text-3xl animate-float opacity-80" style="animation-delay: 1.2s;">🌟</div>
+    <div class="absolute top-1/2 left-3 text-purple-300 text-2xl animate-float opacity-60" style="animation-delay: 2.2s;">💖</div>
+    <div class="absolute top-2/3 right-3 text-rose-300 text-2xl animate-float opacity-70" style="animation-delay: 0.8s;">🎀</div>
+  </div>
+
+  <!-- Mobile App Header Bar -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-pink-100/80 shadow-xs px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-xl animate-bounceGentle">🎂</span>
+      <div class="leading-tight">
+        <h2 class="font-mitr font-semibold text-pink-600 text-sm tracking-wide">Thisa Suttisa</h2>
+        <p class="text-[10px] text-pink-400 font-mitr">Special Birthday 🌸</p>
+      </div>
+    </div>
+
+    <!-- Thumb-friendly Music Toggle Button -->
+    <button id="musicBtn" class="flex items-center gap-1.5 bg-rose-500 hover:bg-rose-600 text-white px-3.5 py-1.5 rounded-full text-xs font-mitr font-medium shadow-md shadow-pink-300/40 active:scale-95 transition-all">
+      <span id="musicIcon" class="text-sm">🎵</span>
+      <span id="musicText">เปิดเพลง HBD</span>
+    </button>
+  </header>
+
+  <!-- Mobile Main Container (Optimized single-column width) -->
+  <main class="relative z-10 w-full max-w-md mx-auto px-4 py-3 flex flex-col items-center pb-28">
+    
+    <!-- Hero Profile Section -->
+    <section class="text-center w-full mt-2 mb-5">
+      <div class="relative inline-block mb-2.5">
+        <div id="avatarContainer" class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-pink-400 via-rose-300 to-amber-200 shadow-xl mx-auto relative cursor-pointer active:scale-95 transition-transform group" onclick="openImageModal('S__7397382_0.jpg', 'Thisa Suttisa 👑')" title="แตะเพื่อดูรูปใหญ่">
+          <img id="personAvatar" src="S__7397382_0.jpg" alt="Thisa Suttisa" class="w-full h-full object-cover rounded-full border-2 border-white group-hover:brightness-105 transition-all">
+          <div class="absolute inset-0 rounded-full flex items-center justify-center bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="text-white text-[10px] font-mitr bg-black/40 px-2 py-0.5 rounded-full">🔍 ดูรูป</span>
+          </div>
+        </div>
+        <div class="absolute -bottom-1 -right-0.5 bg-amber-400 text-white rounded-full p-1.5 shadow-md animate-bounceGentle text-xs font-bold border-2 border-white">
+          👑
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-1 bg-pink-100/90 text-pink-600 px-3 py-0.5 rounded-full text-[11px] font-mitr mb-2 shadow-xs">
+        <span>✨</span>
+        <span>Dedicated to Thisa Suttisa</span>
+        <span>✨</span>
+      </div>
+
+      <h1 class="text-2xl font-extrabold text-pink-600 font-mitr tracking-tight drop-shadow-xs flex items-center justify-center gap-1.5">
+        <span>Happy Birthday</span>
+        <span class="text-rose-500 underline decoration-pink-300 decoration-wavy underline-offset-4">Thisa</span>
+        <span>💖</span>
+      </h1>
+      <p class="text-pink-500/90 font-medium text-xs mt-1.5 font-mitr px-3">
+        🎂 สุขสันต์วันเกิดน้องษา ขอบคุณที่เป็นความสดใสในทุกๆ วันนะ ✨
+      </p>
+    </section>
+
+    <section class="w-full max-w-md bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-pink-100 flex flex-col items-center relative overflow-hidden mb-8">
+      <div class="absolute top-2 right-3 text-xs bg-pink-50 text-pink-500 px-2.5 py-1 rounded-full border border-pink-200">
+        👆 แตะที่เทียนเพื่อเป่า
+      </div>
+
+      <!-- Birthday Cake Illustration -->
+      <div class="relative w-64 h-52 mt-6 flex flex-col items-center justify-end select-none cursor-pointer" id="cakeClickArea">
+        
+        <!-- Candles Row -->
+        <div class="flex items-end justify-center gap-6 mb-[-6px] z-10">
+          <!-- Candle 1 -->
+          <div class="candle flex flex-col items-center relative group" data-candle="1">
+            <div class="smoke" id="smoke1"></div>
+            <div class="flame animate-flicker mb-1" id="flame1"></div>
+            <div class="w-3.5 h-12 bg-gradient-to-r from-pink-300 via-white to-pink-300 rounded-t-sm shadow-sm border border-pink-400/30"></div>
+          </div>
+          <!-- Candle 2 (Middle) -->
+          <div class="candle flex flex-col items-center relative group" data-candle="2">
+            <div class="smoke" id="smoke2"></div>
+            <div class="flame animate-flicker mb-1" id="flame2" style="animation-delay: 0.2s;"></div>
+            <div class="w-3.5 h-14 bg-gradient-to-r from-yellow-200 via-white to-yellow-300 rounded-t-sm shadow-sm border border-amber-300/40"></div>
+          </div>
+          <!-- Candle 3 -->
+          <div class="candle flex flex-col items-center relative group" data-candle="3">
+            <div class="smoke" id="smoke3"></div>
+            <div class="flame animate-flicker mb-1" id="flame3" style="animation-delay: 0.4s;"></div>
+            <div class="w-3.5 h-12 bg-gradient-to-r from-purple-300 via-white to-purple-300 rounded-t-sm shadow-sm border border-purple-400/30"></div>
+          </div>
+        </div>
+
+        <!-- Cake Top Tier -->
+        <div class="w-36 h-14 bg-gradient-to-b from-[#FFF5FA] to-[#FFD1DC] rounded-t-2xl relative shadow-md flex items-center justify-center border-t-4 border-pink-300 z-8">
+          <!-- Strawberry Frosting Drops -->
+          <div class="absolute -bottom-2 w-full flex justify-around px-2">
+            <span class="w-4 h-4 bg-[#FFD1DC] rounded-full"></span>
+            <span class="w-5 h-5 bg-[#FFD1DC] rounded-full -mt-1"></span>
+            <span class="w-4 h-4 bg-[#FFD1DC] rounded-full"></span>
+            <span class="w-5 h-5 bg-[#FFD1DC] rounded-full -mt-0.5"></span>
+          </div>
+          <div class="flex gap-2">
+            <span class="text-xs">🍓</span>
+            <span class="text-xs">🍒</span>
+            <span class="text-xs">🍓</span>
+          </div>
+        </div>
+
+        <!-- Cake Bottom Tier -->
+        <div class="w-52 h-20 bg-gradient-to-b from-[#FFE8D6] to-[#F7B2BD] rounded-t-3xl relative shadow-lg flex flex-col items-center justify-center border-t-4 border-amber-200">
+          <div class="w-full flex justify-evenly px-3">
+            <div class="w-2.5 h-2.5 bg-white/70 rounded-full"></div>
+            <div class="w-2 h-2 bg-pink-200 rounded-full"></div>
+            <div class="w-2.5 h-2.5 bg-yellow-200 rounded-full"></div>
+            <div class="w-2 h-2 bg-purple-200 rounded-full"></div>
+            <div class="w-2.5 h-2.5 bg-white/70 rounded-full"></div>
+          </div>
+          <span class="text-xs font-mitr font-semibold text-rose-700/80 mt-1">✨ MAKE A WISH ✨</span>
+        </div>
+
+        <!-- Cake Plate/Stand -->
+        <div class="w-64 h-4 bg-gradient-to-r from-slate-100 via-white to-slate-200 rounded-full shadow-md border-b-2 border-slate-300"></div>
+      </div>
+
+      <!-- Blow Button and Status -->
+      <div class="mt-5 w-full flex flex-col items-center">
+        <div id="wishStatus" class="text-center text-xs sm:text-sm font-mitr text-slate-600 mb-3 transition-all">
+          อธิษฐานในใจแล้ว <span class="text-rose-500 font-bold">กดเป่าเทียนเลย! 💨</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full justify-center">
+          <button id="blowCandlesBtn" class="flex-1 max-w-[240px] bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-mitr py-3 rounded-full shadow-md shadow-pink-300/60 active:scale-95 transition-all flex items-center justify-center gap-1.5 text-sm">
+            <span>💨 เป่าเทียนพร้อมกัน!</span>
+          </button>
+          <button id="relightCandlesBtn" class="hidden flex-1 max-w-[240px] bg-amber-100 hover:bg-amber-200 text-amber-800 font-mitr py-3 rounded-full text-xs font-medium transition-all shadow-xs">
+            🕯️ จุดเทียนใหม่
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Balloon Section (Optimized Touch Grid for Mobile) -->
+    <section class="w-full mb-6">
+      <div class="flex items-center justify-between mb-2.5 px-1">
+        <h2 class="text-base font-mitr font-bold text-pink-600 flex items-center gap-1.5">
+          <span>🎈 จิ้มลูกโป่งรับคำอวยพร</span>
+        </h2>
+        <span class="text-[11px] font-mitr text-slate-500 bg-white px-2.5 py-1 rounded-full border border-pink-100 shadow-xs">
+          แตกแล้ว: <span id="poppedCount" class="font-bold text-pink-500">0</span>/12
+        </span>
+      </div>
+
+      <!-- Mobile-friendly 3x4 touch-friendly grid -->
+      <div id="balloonArena" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 bg-white/70 backdrop-blur-sm p-3.5 rounded-2xl border border-pink-100 shadow-sm">
+        <!-- Balloons generated via JS -->
+      </div>
+    </section>
+
+    <!-- Surprise Gift Box Section -->
+    <section class="w-full bg-gradient-to-br from-pink-50 via-white to-purple-50 rounded-3xl p-5 border border-pink-200/60 shadow-lg text-center mb-6 relative">
+      <div class="inline-block bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        Surprise Gift for Thisa
+      </div>
+      <h3 class="text-lg font-mitr font-bold text-slate-800 mb-3">มีกล่องของขวัญพิเศษมาส่งให้! 🎁</h3>
+
+      <!-- Gift Box Visual with Touch Pulse -->
+      <div id="giftBox" class="w-24 h-24 mx-auto cursor-pointer relative group transition-transform active:scale-90 mb-3">
+        <!-- Ribbon Lid -->
+        <div id="giftLid" class="w-28 h-7 bg-rose-400 rounded-t-lg absolute -top-2 -left-2 z-20 shadow-md flex items-center justify-center transition-all duration-500">
+          <div class="w-5 h-full bg-amber-300"></div>
+          <div class="absolute -top-3.5 text-xl animate-wiggle">🎀</div>
+        </div>
+        <!-- Box Body -->
+        <div id="giftBody" class="w-24 h-20 bg-gradient-to-b from-rose-300 to-rose-400 rounded-b-xl relative z-10 shadow-lg flex items-center justify-center overflow-hidden">
+          <div class="w-5 h-full bg-amber-300"></div>
+          <div class="absolute inset-0 flex items-center justify-center text-white font-mitr font-bold text-[11px] opacity-90 animate-pulse">
+            แตะเปิดเลย! 👆
+          </div>
+        </div>
+      </div>
+
+      <!-- Revealed Heartfelt Letter & Surprise Photo (Mobile-friendly aspect) -->
+      <div id="letterContainer" class="hidden transition-all duration-500 bg-white p-4 rounded-2xl border border-rose-200 shadow-md text-left mt-2">
+        <div class="flex items-center gap-2 border-b border-pink-100 pb-2 mb-3">
+          <span class="text-lg">💌</span>
+          <h4 class="font-mitr font-bold text-pink-600 text-sm">Surprise Birthday Wish ถึง Thisa Suttisa</h4>
+        </div>
+
+        <!-- Surprise Photo Display for Mobile Screen with Tap to Reveal -->
+        <div id="surprisePhotoCard" class="card-polaroid bg-white p-2.5 rounded-2xl border border-pink-200 shadow-md mb-3.5 cursor-pointer group" onclick="handleCardClick(this, 'S__7397382_0.jpg', '✨ สดใสที่สุดในโลก (Happy Birthday Thisa) 🌸💖')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full bg-pink-50 relative rounded-xl">
+            <img id="surprisePhoto" src="S__7397382_0.jpg" alt="Happy Birthday Thisa" class="photo-img w-full h-auto max-h-[380px] object-cover object-top">
+            
+            <!-- Tap to reveal overlay -->
+            <div class="photo-reveal-overlay">
+              <div class="w-12 h-12 rounded-full bg-white/95 shadow-md text-rose-500 flex items-center justify-center text-2xl mb-2 animate-bounceGentle border border-pink-100">
+                🎁
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-4 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-rose-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                รูปเซอร์ไพรส์พิเศษสำหรับน้อง 💖
+              </span>
+            </div>
+
+            <!-- View full size badge once revealed -->
+            <div class="photo-view-badge">
+              <span class="bg-black/60 backdrop-blur-xs text-white rounded-full px-3 py-1 text-[11px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 แตะดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p id="displayCustomMessage" class="text-slate-700 leading-relaxed font-itim text-base whitespace-pre-line">
+          สุขสันต์วันเกิดน้องษา (Thisa Suttisa) 🌸✨
+
+          ขอบคุณที่มาเป็นความสดใสให้กับโลกใบนี้ ขอบคุณสำหรับทุกรอยยิ้ม และพลังบวกที่มีให้คนรอบข้างเสมอมานะ ขอให้ปีนี้เป็นปีที่ใจดีกับน้องษามากๆ มีความสุขกับทุกสิ่งรอบตัว สุขภาพแข็งแรง ได้กินของอร่อยๆ เต็มที่ในทุกๆ วัน และขอให้ทุกความฝันและความตั้งใจของน้องประสบความสำเร็จอย่างราบรื่น
+
+          ไม่ว่าจะเจอวันที่เหนื่อยล้าหรือวันที่ดี จำไว้นะว่ามีคนที่คอยเชียร์และอยู่เคียงข้างน้องตรงนี้เสมอ! มีความสุขมากๆ ในวันเกิดนะน้องษา 💖🎂
+        </p>
+        <div class="mt-3 pt-2.5 border-t border-dashed border-pink-200 flex justify-between items-center text-[11px] text-pink-500 font-mitr">
+          <span>HBD To Thisa 🌈</span>
+          <span>จาก: คนที่อยู่ข้างๆ น้องเสมอ 💕</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Memories Section: Mobile Swipeable / Card Feed -->
+    <section class="w-full mb-4">
+      <div class="flex items-center justify-between mb-3 px-1">
+        <div>
+          <h3 class="text-base sm:text-lg font-mitr font-bold text-slate-800 flex items-center gap-1.5">
+            <span>📸 Photo Memories Sets น่ารักทุกรูปเลย </span>
+          </h3>
+          <p class="text-pink-500/80 text-[11px] sm:text-xs font-mitr">แตะที่รูปเพื่อเปิดดูทีละรูปนะ ✨</p>
+        </div>
+        <button id="toggleAllPhotosBtn" onclick="toggleAllPhotosReveal()" class="text-[11px] font-mitr bg-pink-100 hover:bg-pink-200 text-pink-700 px-3 py-1.5 rounded-full shadow-xs active:scale-95 transition-all flex items-center gap-1 whitespace-nowrap">
+          <span id="toggleAllIcon">🪄</span>
+          <span id="toggleAllText">เปิดดูทั้งหมด</span>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <!-- Photo Card 1 (Tonmai Coffee) -->
+        <div class="card-polaroid bg-white p-3 rounded-2xl border border-pink-100 shadow-sm cursor-pointer group transition-transform active:scale-[0.98]" onclick="handleCardClick(this, 'S__7397380_0.jpg', 'นั่งจิบกาแฟชิลๆ ยิ้มหวานที่สุด ☕💖')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full aspect-[4/3] bg-pink-50 mb-2 relative">
+            <img id="memImg1" src="S__7397380_0.jpg" alt="Thisa Memory 1" class="photo-img w-full h-full object-cover">
+            
+            <div class="photo-reveal-overlay">
+              <div class="w-11 h-11 rounded-full bg-white/95 shadow-md text-pink-500 flex items-center justify-center text-xl mb-1.5 animate-bounceGentle border border-pink-100">
+                🔒
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-pink-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                ความทรงจำที่ 1 ☕
+              </span>
+            </div>
+
+            <div class="photo-view-badge">
+              <span class="bg-black/55 backdrop-blur-xs text-white rounded-full px-2.5 py-1 text-[10px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 ดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+          <p class="w-full text-center font-itim text-slate-700 text-sm py-1">นั่งจิบกาแฟชิลๆ ยิ้มหวานที่สุด ☕💖</p>
+        </div>
+
+        <!-- Photo Card 2 (Hiking / Nature) -->
+        <div class="card-polaroid bg-white p-3 rounded-2xl border border-pink-100 shadow-sm cursor-pointer group transition-transform active:scale-[0.98]" onclick="handleCardClick(this, 'S__7397379_0.jpg', 'ลุยธรรมชาติ สดใสรับพลังบวก 🌿⛰️')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full aspect-[4/3] bg-amber-50 mb-2 relative">
+            <img id="memImg2" src="S__7397379_0.jpg" alt="Thisa Memory 2" class="photo-img w-full h-full object-cover">
+            
+            <div class="photo-reveal-overlay">
+              <div class="w-11 h-11 rounded-full bg-white/95 shadow-md text-pink-500 flex items-center justify-center text-xl mb-1.5 animate-bounceGentle border border-pink-100">
+                🔒
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-pink-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                ความทรงจำที่ 2 🌿
+              </span>
+            </div>
+
+            <div class="photo-view-badge">
+              <span class="bg-black/55 backdrop-blur-xs text-white rounded-full px-2.5 py-1 text-[10px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 ดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+          <p class="w-full text-center font-itim text-slate-700 text-sm py-1">ลุยธรรมชาติ สดใสรับพลังบวก 🌿⛰️</p>
+        </div>
+
+        <!-- Photo Card 3 (Mountain View) -->
+        <div class="card-polaroid bg-white p-3 rounded-2xl border border-pink-100 shadow-sm cursor-pointer group transition-transform active:scale-[0.98]" onclick="handleCardClick(this, 'S__7422018_0.jpg', 'สูดอากาศสดชื่นบนยอดเขา ยิ้มกว้างรับฟ้าใส 🏔️🌤️')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full aspect-[4/3] bg-sky-50 mb-2 relative">
+            <img id="memImg4" src="S__7422018_0.jpg" alt="Thisa Memory 4" class="photo-img w-full h-full object-cover">
+            
+            <div class="photo-reveal-overlay">
+              <div class="w-11 h-11 rounded-full bg-white/95 shadow-md text-pink-500 flex items-center justify-center text-xl mb-1.5 animate-bounceGentle border border-pink-100">
+                🔒
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-pink-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                ความทรงจำที่ 3 🏔️
+              </span>
+            </div>
+
+            <div class="photo-view-badge">
+              <span class="bg-black/55 backdrop-blur-xs text-white rounded-full px-2.5 py-1 text-[10px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 ดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+          <p class="w-full text-center font-itim text-slate-700 text-sm py-1">สูดอากาศสดชื่นบนยอดเขาที่ชอบ 🏔️🌤️</p>
+        </div>
+
+        <!-- Photo Card 4 (Beach / Sea) -->
+        <div class="card-polaroid bg-white p-3 rounded-2xl border border-pink-100 shadow-sm cursor-pointer group transition-transform active:scale-[0.98]" onclick="handleCardClick(this, 'S__7422019_0.jpg', 'รับลมทะเลสดใส รอยยิ้มหวานชนะคลื่น 🏖️🌊')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full aspect-[4/3] bg-teal-50 mb-2 relative">
+            <img id="memImg5" src="S__7422019_0.jpg" alt="Thisa Memory 5" class="photo-img w-full h-full object-cover">
+            
+            <div class="photo-reveal-overlay">
+              <div class="w-11 h-11 rounded-full bg-white/95 shadow-md text-pink-500 flex items-center justify-center text-xl mb-1.5 animate-bounceGentle border border-pink-100">
+                🔒
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-pink-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                ความทรงจำที่ 4 🏖️
+              </span>
+            </div>
+
+            <div class="photo-view-badge">
+              <span class="bg-black/55 backdrop-blur-xs text-white rounded-full px-2.5 py-1 text-[10px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 ดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+          <p class="w-full text-center font-itim text-slate-700 text-sm py-1">ขอให้ได้ไปทะเลอย่างที่อยากไป 🏖️🌊</p>
+        </div>
+
+        <!-- Photo Card 5 (Blue Maxi Dress) -->
+        <div class="card-polaroid bg-white p-3 rounded-2xl border border-pink-100 shadow-sm cursor-pointer group transition-transform active:scale-[0.98]" onclick="handleCardClick(this, 'S__7397381_0.jpg', 'ขอให้โลกนี้ใจดีและสดใสกับเธอเสมอ 🌸💫')" title="แตะเพื่อดูรูปภาพ">
+          <div class="photo-reveal-box w-full aspect-[4/3] bg-purple-50 mb-2 relative">
+            <img id="memImg3" src="S__7397381_0.jpg" alt="Thisa Memory 3" class="photo-img w-full h-full object-cover">
+            
+            <div class="photo-reveal-overlay">
+              <div class="w-11 h-11 rounded-full bg-white/95 shadow-md text-pink-500 flex items-center justify-center text-xl mb-1.5 animate-bounceGentle border border-pink-100">
+                🔒
+              </div>
+              <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-mitr text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md shadow-pink-400/40 flex items-center gap-1.5 active:scale-95 transition-transform">
+                <span>แตะเพื่อแสดงรูปภาพ</span>
+                <span>✨</span>
+              </span>
+              <span class="text-[10px] text-pink-700/80 font-mitr mt-1.5 bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
+                ความทรงจำที่ 5 🌸
+              </span>
+            </div>
+
+            <div class="photo-view-badge">
+              <span class="bg-black/55 backdrop-blur-xs text-white rounded-full px-2.5 py-1 text-[10px] font-mitr flex items-center gap-1 shadow-sm">
+                <span>🔍 ดูรูปใหญ่</span>
+              </span>
+            </div>
+          </div>
+          <p class="w-full text-center font-itim text-slate-700 text-sm py-1">ขอให้โลกนี้ใจดีและสดใสกับเธอเสมอ 🌸💫</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Action Bar (Thumb Reach Friendly) -->
+  <div class="fixed bottom-0 inset-x-0 z-40 bg-white/90 backdrop-blur-lg border-t border-pink-100 p-2.5 px-4 shadow-[0_-4px_20px_rgba(255,182,193,0.3)]">
+    <div class="max-w-md mx-auto flex items-center justify-center">
+      <button id="superConfettiBtn" class="w-full bg-gradient-to-r from-pink-500 via-rose-400 to-pink-500 hover:from-pink-600 hover:to-rose-500 text-white font-mitr font-semibold py-3 rounded-full text-sm shadow-md shadow-pink-300/50 active:scale-95 transition-all flex items-center justify-center gap-2">
+        <span>🎉 จุดพลุฉลองเลยยยย ✨</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 bg-slate-800/90 backdrop-blur-md text-white px-4 py-2 rounded-full shadow-lg font-mitr text-xs flex items-center gap-1.5 transform translate-y-20 opacity-0 transition-all pointer-events-none whitespace-nowrap">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">บันทึกเรียบร้อย</span>
+  </div>
+
+  <!-- Image Viewer Lightbox Modal -->
+  <div id="imageLightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 select-none" onclick="closeImageModal()">
+    <!-- Close Button -->
+    <button id="closeLightboxBtn" onclick="closeImageModal()" class="absolute top-4 right-4 z-50 w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 text-white flex items-center justify-center text-xl backdrop-blur-sm transition-transform cursor-pointer shadow-lg" aria-label="Close">
+      ✕
+    </button>
+    
+    <!-- Image Card Container -->
+    <div class="relative max-w-md w-full flex flex-col items-center justify-center max-h-[85vh] cursor-default" onclick="event.stopPropagation()">
+      <div class="relative overflow-hidden rounded-2xl shadow-2xl border border-white/20 bg-black/20 flex items-center justify-center">
+        <img id="lightboxImg" src="" alt="Photo Fullscreen" class="max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-2xl transition-transform duration-300 scale-95 select-none">
+      </div>
+      <div id="lightboxCaptionBox" class="mt-3 px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 shadow-lg text-center max-w-xs sm:max-w-sm">
+        <p id="lightboxCaption" class="text-white font-itim text-sm sm:text-base leading-snug"></p>
+      </div>
+      <p class="text-white/60 text-[11px] font-mitr mt-2">แตะที่ว่างเพื่อปิด ✕</p>
+    </div>
+  </div>
+
+  <script>
+    /* Global State */
+    let candlesBlown = false;
+    let audioContext = null;
+    let isPlayingMusic = false;
+    let musicTimer = null;
+    let poppedBalloons = 0;
+
+    /* Image Lightbox Modal Viewer */
+    function openImageModal(src, caption = '') {
+      const lightbox = document.getElementById('imageLightbox');
+      const img = document.getElementById('lightboxImg');
+      const cap = document.getElementById('lightboxCaption');
+      const capBox = document.getElementById('lightboxCaptionBox');
+
+      img.src = src;
+      if (caption) {
+        cap.innerText = caption;
+        capBox.classList.remove('hidden');
+      } else {
+        capBox.classList.add('hidden');
+      }
+
+      lightbox.classList.remove('opacity-0', 'pointer-events-none');
+      lightbox.classList.add('opacity-100');
+      setTimeout(() => {
+        img.classList.remove('scale-95');
+        img.classList.add('scale-100');
+      }, 20);
+      document.body.style.overflow = 'hidden';
+
+      // Ensure matching card on the page is also marked as revealed
+      document.querySelectorAll('.photo-reveal-box').forEach(box => {
+        const itemImg = box.querySelector('img');
+        if (itemImg && itemImg.getAttribute('src') === src) {
+          box.classList.add('revealed');
+        }
+      });
+      updateToggleAllButton();
+    }
+
+    function closeImageModal() {
+      const lightbox = document.getElementById('imageLightbox');
+      const img = document.getElementById('lightboxImg');
+      if (!lightbox) return;
+
+      if (img) {
+        img.classList.remove('scale-100');
+        img.classList.add('scale-95');
+      }
+      lightbox.classList.remove('opacity-100');
+      lightbox.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeImageModal();
+    });
+
+    /* Play Magical Fairy Chime Sound (Web Audio) */
+    function playChimeSound() {
+      try {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === 'suspended') {
+          audioContext.resume();
+        }
+        const now = audioContext.currentTime;
+        const freqs = [587.33, 739.99, 880.00, 1174.66]; // D5, F#5, A5, D6
+        freqs.forEach((freq, idx) => {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.38);
+          osc.connect(gain);
+          gain.connect(audioContext.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.38);
+        });
+      } catch (e) {}
+    }
+
+    /* Photo Blur & Tap-to-Reveal Handler */
+    function handleCardClick(cardElement, src, caption) {
+      const revealBox = cardElement.classList.contains('photo-reveal-box') 
+        ? cardElement 
+        : cardElement.querySelector('.photo-reveal-box');
+      
+      if (revealBox && !revealBox.classList.contains('revealed')) {
+        // First tap: Smoothly unblur and reveal!
+        revealBox.classList.add('revealed');
+        playChimeSound();
+
+        // Mini confetti burst from the tapped card position
+        const rect = revealBox.getBoundingClientRect();
+        const ox = (rect.left + rect.width / 2) / window.innerWidth;
+        const oy = (rect.top + rect.height / 2) / window.innerHeight;
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 28,
+            spread: 55,
+            startVelocity: 25,
+            origin: { 
+              x: Math.max(0.1, Math.min(0.9, ox)), 
+              y: Math.max(0.1, Math.min(0.9, oy)) 
+            },
+            colors: ['#FF69B4', '#FFB6C1', '#FF6B8B', '#FFE69A', '#D2F5E3']
+          });
+        }
+
+        showToast('✨ เปิดดูรูปความทรงจำเรียบร้อย!', '🌸');
+        updateToggleAllButton();
+      } else {
+        // Already revealed: Open full-screen modal!
+        openImageModal(src, caption);
+      }
+    }
+
+    /* Toggle all photos reveal / blur */
+    function toggleAllPhotosReveal() {
+      const boxes = document.querySelectorAll('.photo-reveal-box');
+      const unrevealed = Array.from(boxes).filter(b => !b.classList.contains('revealed'));
+
+      if (unrevealed.length > 0) {
+        // Reveal all
+        boxes.forEach(b => b.classList.add('revealed'));
+        playChimeSound();
+        triggerFullCelebrationConfetti();
+        showToast('✨ เปิดดูรูปภาพทั้งหมดเรียบร้อยแล้ว!', '🎉');
+      } else {
+        // Re-blur all
+        boxes.forEach(b => b.classList.remove('revealed'));
+        showToast('🔒 เบลอรูปภาพทั้งหมดเรียบร้อย', '✨');
+      }
+      updateToggleAllButton();
+    }
+
+    function updateToggleAllButton() {
+      const icon = document.getElementById('toggleAllIcon');
+      const text = document.getElementById('toggleAllText');
+      if (!text || !icon) return;
+
+      const boxes = document.querySelectorAll('.photo-reveal-box');
+      const unrevealed = Array.from(boxes).filter(b => !b.classList.contains('revealed'));
+
+      if (unrevealed.length === 0) {
+        icon.innerText = '🔒';
+        text.innerText = 'เบลอรูปทั้งหมด';
+      } else {
+        icon.innerText = '🪄';
+        text.innerText = 'เปิดดูทั้งหมด';
+      }
+    }
+
+    /* Music System (Plays music.mp3 if present, with graceful Music-Box Web Audio fallback) */
+    const bgAudio = new Audio('music.mp3');
+    bgAudio.loop = true;
+    let musicMode = 'audio';
+
+    /* Cute Wish list inside balloons */
+    const balloonWishes = [
+      "ขอให้ร่ำรวยเงินทอง 💰",
+      "สุขภาพแข็งแรงไม่ปวดหลัง 🤸",
+      "มีแต่คนรักคนเอ็นดู 🥰",
+      "กินเท่าไหร่ก็ไม่อ้วน 🍰",
+      "สอบผ่าน/งานราบรื่น 📝",
+      "นอนหลับฝันดีทุกคืน 🌙",
+      "เจอความรักดีๆ สดใส 💖",
+      "เที่ยวสนุกทุกทริป ✈️",
+      "ถูกลอตเตอรี่รางวัลใหญ่ 🎟️",
+      "ยิ้มเก่งมีความสุขตลอดไป 🌻",
+      "คิดอะไรก็สมปรารถนา ⭐",
+      "พบเจอแต่คนจริงใจ 🤝"
+    ];
+
+    /* Initialize balloons */
+    function initBalloons() {
+      const arena = document.getElementById('balloonArena');
+      arena.innerHTML = '';
+      const colors = [
+        'bg-pink-100 border-pink-300 text-pink-500',
+        'bg-purple-100 border-purple-300 text-purple-500',
+        'bg-yellow-100 border-yellow-300 text-amber-500',
+        'bg-rose-100 border-rose-300 text-rose-500',
+        'bg-emerald-100 border-emerald-300 text-emerald-600',
+        'bg-sky-100 border-sky-300 text-sky-500'
+      ];
+
+      balloonWishes.forEach((wish, idx) => {
+        const colorClass = colors[idx % colors.length];
+        const balloon = document.createElement('button');
+        balloon.className = `balloon-item relative h-20 rounded-2xl border flex flex-col items-center justify-center p-1 transition-all active:scale-90 hover:scale-105 shadow-sm ${colorClass}`;
+        balloon.innerHTML = `
+          <span class="text-2xl balloon-icon animate-bounceGentle">🎈</span>
+          <span class="text-[10px] font-mitr mt-1 opacity-70">จิ้มเลย</span>
+        `;
+        
+        balloon.onclick = () => popBalloon(balloon, wish);
+        arena.appendChild(balloon);
+      });
+    }
+
+    /* Balloon Pop Handler */
+    function popBalloon(element, wish) {
+      if (element.classList.contains('popped')) return;
+      element.classList.add('popped');
+      
+      // Play cute pop sound
+      playPopSound();
+
+      // Confetti mini blast with safe bounds fallback
+      const rect = (element && typeof element.getBoundingClientRect === 'function')
+        ? element.getBoundingClientRect()
+        : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+
+      const x = (rect.left + rect.width / 2) / (window.innerWidth || 360);
+      const y = (rect.top + rect.height / 2) / (window.innerHeight || 640);
+      
+      confetti({
+        particleCount: 25,
+        spread: 45,
+        origin: { x, y },
+        colors: ['#FF69B4', '#FFA07A', '#9370DB', '#FFD700']
+      });
+
+      element.innerHTML = `
+        <span class="text-base">✨</span>
+        <span class="text-[11px] font-mitr font-medium leading-tight text-center px-1">${wish}</span>
+      `;
+      element.classList.remove('active:scale-90', 'hover:scale-105');
+      element.classList.add('bg-white', 'border-rose-200', 'shadow-inner');
+
+      poppedBalloons++;
+      document.getElementById('poppedCount').innerText = poppedBalloons;
+      showToast(`ได้รับพร: ${wish}`, '🎈');
+    }
+
+    function playTone(freq, duration, startTime, type = 'sine') {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      // Cute music-box bell envelope
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.2, startTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    function playPopSound() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const now = audioContext.currentTime;
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    }
+
+    /* Happy Birthday Note Frequencies (C4 to C5 scale) */
+    const notes = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+      G4: 392.00, A4: 440.00, Bb4: 466.16, B4: 493.88,
+      C5: 523.25, D5: 587.33
+    };
+
+    const hbdMelody = [
+      { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.2 }, { note: notes.D4, dur: 0.5 }, { note: notes.C4, dur: 0.5 }, { note: notes.F4, dur: 0.5 }, { note: notes.E4, dur: 0.8 },
+      { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.2 }, { note: notes.D4, dur: 0.5 }, { note: notes.C4, dur: 0.5 }, { note: notes.G4, dur: 0.5 }, { note: notes.F4, dur: 0.8 },
+      { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.2 }, { note: notes.C5, dur: 0.5 }, { note: notes.A4, dur: 0.5 }, { note: notes.F4, dur: 0.5 }, { note: notes.E4, dur: 0.5 }, { note: notes.D4, dur: 0.6 },
+      { note: notes.Bb4, dur: 0.35 }, { note: notes.Bb4, dur: 0.2 }, { note: notes.A4, dur: 0.5 }, { note: notes.F4, dur: 0.5 }, { note: notes.G4, dur: 0.5 }, { note: notes.F4, dur: 0.9 }
+    ];
+
+    function toggleMusic() {
+      const musicBtn = document.getElementById('musicBtn');
+      const musicIcon = document.getElementById('musicIcon');
+      const musicText = document.getElementById('musicText');
+
+      if (isPlayingMusic) {
+        if (musicMode === 'audio') {
+          bgAudio.pause();
+        } else {
+          stopHBDMusic();
+        }
+        isPlayingMusic = false;
+        musicIcon.innerText = '🎵';
+        musicText.innerText = 'เปิดเพลง HBD';
+        musicBtn.classList.remove('ring-2', 'ring-white', 'scale-105');
+        showToast('พักเสียงเพลงเรียบร้อย ⏸️', '✨');
+      } else {
+        // Try playing custom music.mp3 first
+        bgAudio.play().then(() => {
+          isPlayingMusic = true;
+          musicMode = 'audio';
+          musicIcon.innerText = '⏸️';
+          musicText.innerText = 'พักเพลงก่อน';
+          musicBtn.classList.add('ring-2', 'ring-white', 'scale-105');
+          showToast('กำลังเล่นเพลงวันเกิดให้ธิษาอยู่นะ 🎶💖', '🎂');
+        }).catch(() => {
+          // Fallback to built-in Web Audio Music Box
+          if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioContext.state === 'suspended') {
+            audioContext.resume();
+          }
+          isPlayingMusic = true;
+          musicMode = 'synth';
+          startHBDMusic();
+          musicIcon.innerText = '⏸️';
+          musicText.innerText = 'พักเพลงก่อน';
+          musicBtn.classList.add('ring-2', 'ring-white', 'scale-105');
+          showToast('กำลังบรรเลงเพลงกล่องดนตรีวันเกิดให้ธิษา 🎶', '🎂');
+        });
+      }
+    }
+
+    function startHBDMusic() {
+      isPlayingMusic = true;
+      let currentNoteIdx = 0;
+
+      function playNext() {
+        if (!isPlayingMusic) return;
+        const item = hbdMelody[currentNoteIdx];
+        const now = audioContext.currentTime;
+
+        // Play melody note + soft sub-octave harmonizer
+        playTone(item.note, item.dur * 0.85, now, 'triangle');
+        playTone(item.note / 2, item.dur * 0.85, now, 'sine');
+
+        currentNoteIdx = (currentNoteIdx + 1) % hbdMelody.length;
+        musicTimer = setTimeout(playNext, item.dur * 1000);
+      }
+      playNext();
+    }
+
+    function stopHBDMusic() {
+      isPlayingMusic = false;
+      if (musicTimer) clearTimeout(musicTimer);
+    }
+
+    function blowOutCandles() {
+      if (candlesBlown) return;
+      candlesBlown = true;
+
+      // Extinguish flames
+      for (let i = 1; i <= 3; i++) {
+        const flame = document.getElementById(`flame${i}`);
+        const smoke = document.getElementById(`smoke${i}`);
+        if (flame) flame.classList.add('extinguished');
+        if (smoke) {
+          smoke.classList.add('active');
+          setTimeout(() => smoke.classList.remove('active'), 1500);
+        }
+      }
+
+      // Play little pop/spark sound
+      playPopSound();
+
+      // Mega Confetti explosion
+      triggerFullCelebrationConfetti();
+
+      // Update UI Status
+      const wishStatus = document.getElementById('wishStatus');
+      wishStatus.innerHTML = '🎉 <span class="text-rose-600 font-bold">คำอธิษฐานถูกส่งไปถึงดวงดาวแล้ว!</span> ขอให้เป็นจริงทุกประการนะ ✨';
+
+      document.getElementById('blowCandlesBtn').classList.add('hidden');
+      document.getElementById('relightCandlesBtn').classList.remove('hidden');
+
+      showToast('เป่าเทียนสำเร็จ! ขอให้คำอธิษฐานเป็นจริงนะ 🌟', '💖');
+    }
+
+    function relightCandles() {
+      candlesBlown = false;
+      for (let i = 1; i <= 3; i++) {
+        const flame = document.getElementById(`flame${i}`);
+        if (flame) flame.classList.remove('extinguished');
+      }
+
+      const wishStatus = document.getElementById('wishStatus');
+      wishStatus.innerHTML = 'อธิษฐานในใจแล้ว <span class="text-rose-500 font-bold">กดเป่าเทียนเลย! 💨</span>';
+
+      document.getElementById('blowCandlesBtn').classList.remove('hidden');
+      document.getElementById('relightCandlesBtn').classList.add('hidden');
+    }
+
+    /* Built-in Lightweight & Bulletproof Confetti Engine (No Worker / OffscreenCanvas bugs) */
+    const ConfettiEngine = (function() {
+      let canvas = null;
+      let ctx = null;
+      let particles = [];
+      let animId = null;
+
+      const palette = ['#FF69B4', '#FFB6C1', '#FF6B8B', '#FFE69A', '#D2F5E3', '#E4D4F7', '#FF9F43', '#FF4757', '#A29BFE'];
+
+      function ensureCanvas() {
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.id = 'birthday-celebration-confetti';
+          canvas.style.position = 'fixed';
+          canvas.style.top = '0';
+          canvas.style.left = '0';
+          canvas.style.width = '100vw';
+          canvas.style.height = '100vh';
+          canvas.style.pointerEvents = 'none';
+          canvas.style.zIndex = '99999';
+          document.body.appendChild(canvas);
+          ctx = canvas.getContext('2d');
+          resize();
+          window.addEventListener('resize', resize);
+        }
+      }
+
+      function resize() {
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+      }
+
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function createParticle(ox, oy, colors) {
+        const angle = rand(0, Math.PI * 2);
+        const speed = rand(4, 11);
+        const color = colors && colors.length ? colors[Math.floor(Math.random() * colors.length)] : palette[Math.floor(Math.random() * palette.length)];
+        const shapeType = Math.random() > 0.45 ? 'rect' : (Math.random() > 0.5 ? 'circle' : 'heart');
+
+        return {
+          x: ox,
+          y: oy,
+          vx: Math.cos(angle) * speed * rand(0.5, 1.2),
+          vy: Math.sin(angle) * speed * rand(0.8, 1.4) - rand(2, 5),
+          gravity: rand(0.2, 0.35),
+          drag: 0.96,
+          rotation: rand(0, 360),
+          rotSpeed: rand(-7, 7),
+          size: rand(7, 13),
+          color: color,
+          alpha: 1,
+          decay: rand(0.01, 0.018),
+          shape: shapeType
+        };
+      }
+
+      function render() {
+        if (!ctx || !canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.vx *= p.drag;
+          p.vy = p.vy * p.drag + p.gravity;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rotation += p.rotSpeed;
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0 || p.y > canvas.height + 60) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+          } else if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (p.shape === 'heart') {
+            const s = p.size / 3.2;
+            ctx.beginPath();
+            ctx.moveTo(0, s * 0.8);
+            ctx.bezierCurveTo(-s * 2, -s, -s * 2, -s * 2.5, 0, -s * 1.5);
+            ctx.bezierCurveTo(s * 2, -s * 2.5, s * 2, -s, 0, s * 0.8);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+
+        if (particles.length > 0) {
+          animId = requestAnimationFrame(render);
+        } else {
+          animId = null;
+        }
+      }
+
+      return function fire(opts = {}) {
+        ensureCanvas();
+        resize();
+        const count = opts.particleCount || 40;
+        const ox = (opts.origin && typeof opts.origin.x === 'number') ? opts.origin.x * canvas.width : canvas.width / 2;
+        const oy = (opts.origin && typeof opts.origin.y === 'number') ? opts.origin.y * canvas.height : canvas.height / 2;
+        const colors = opts.colors || palette;
+
+        for (let i = 0; i < count; i++) {
+          particles.push(createParticle(ox, oy, colors));
+        }
+
+        if (!animId) {
+          animId = requestAnimationFrame(render);
+        }
+      };
+    })();
+
+    // Make confetti globally available
+    window.confetti = ConfettiEngine;
+
+    function triggerFullCelebrationConfetti() {
+      const duration = 2.2 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+        confetti({
+          particleCount: 35,
+          origin: { x: randomInRange(0.15, 0.4), y: Math.random() * 0.3 }
+        });
+        confetti({
+          particleCount: 35,
+          origin: { x: randomInRange(0.6, 0.85), y: Math.random() * 0.3 }
+        });
+      }, 220);
+    }
+
+    function setupGiftBox() {
+      const giftBox = document.getElementById('giftBox');
+      const letterContainer = document.getElementById('letterContainer');
+      let opened = false;
+
+      giftBox.addEventListener('click', () => {
+        if (!opened) {
+          opened = true;
+          const lid = document.getElementById('giftLid');
+          lid.style.transform = 'translateY(-24px) rotate(-15deg)';
+          lid.style.opacity = '0.7';
+
+          playPopSound();
+
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.65 }
+          });
+
+          setTimeout(() => {
+            letterContainer.classList.remove('hidden');
+            letterContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 300);
+        }
+      });
+    }
+
+    /* Toast Notification Helper */
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.innerText = message;
+      toastIcon.innerText = icon;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2600);
+    }
+
+    /* Celebration Fireworks Button */
+    function setupCelebrationButton() {
+      const confettiBtn = document.getElementById('superConfettiBtn');
+      if (confettiBtn) {
+        confettiBtn.onclick = () => {
+          triggerFullCelebrationConfetti();
+          playPopSound();
+          showToast('เย้! สุขสันต์วันเกิดนะน้องษา 🎉✨', '🥳');
+        };
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initBalloons();
+      setupGiftBox();
+      setupCelebrationButton();
+      updateToggleAllButton();
+
+      // Candle click & blow events
+      document.getElementById('blowCandlesBtn').onclick = blowOutCandles;
+      document.getElementById('relightCandlesBtn').onclick = relightCandles;
+      document.getElementById('cakeClickArea').onclick = (e) => {
+        if (!candlesBlown) blowOutCandles();
+      };
+
+      // Music Button
+      document.getElementById('musicBtn').onclick = toggleMusic;
+
+      // Welcome Confetti Burst
+      setTimeout(() => {
+        confetti({
+          particleCount: 40,
+          spread: 60,
+          origin: { y: 0.4 }
+        });
+      }, 500);
+    });
+  </script>
+</body>
+</html>
